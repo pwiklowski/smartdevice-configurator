@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/red"
+    android:layout_height="match_parent">
+
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="150sp"
+            android:layout_height="92dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40sp"
+            app:layout_constraintBottom_toTopOf="@+id/imageView2"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@mipmap/logo" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="260sp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imageView"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:srcCompat="@mipmap/nazwa"
+            tools:layout_editor_absoluteY="174dp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="200sp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="117dp" />
+
+
+</RelativeLayout>
+

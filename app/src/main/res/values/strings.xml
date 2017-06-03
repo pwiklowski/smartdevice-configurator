@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Smart Device Configurator</string>
+    <string name="prefereces">preferences</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
