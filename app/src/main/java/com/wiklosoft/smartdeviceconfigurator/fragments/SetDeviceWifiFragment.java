@@ -1,9 +1,12 @@
 package com.wiklosoft.smartdeviceconfigurator.fragments;
 
+import android.content.Context;
+import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,10 +34,18 @@ public class SetDeviceWifiFragment extends WifiResultsFragment {
         mWifiManager = (WifiManager)getActivity().getApplicationContext().getSystemService(WIFI_SERVICE);
         View v = inflater.inflate(R.layout.fragment_wifi_results, container, false);
         mAdapter = new WifiListAdapter(getActivity(), mResults);
+        mListContainer = (SwipeRefreshLayout) v.findViewById(R.id.wifiListContainer);
         mList = (ListView) v.findViewById(R.id.wifiList);
         mList.setAdapter(mAdapter);
 
         mList.setOnItemClickListener(mOnItemClickListener);
+        mListContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mWifiManager.startScan();
+            }
+        });
+
         return v;
     }
     AdapterView.OnItemClickListener mOnItemClickListener = new AdapterView.OnItemClickListener() {
