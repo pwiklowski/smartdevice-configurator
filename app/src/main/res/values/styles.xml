@@ -3,12 +3,17 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/pinkish</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:textColor">#ffffffff</item>
+        <item name="colorAccent">@color/pinkish</item>
         <item name="android:fontFamily">sans-serif-thin</item>
-        <item name="android:background">@color/pinkish</item>
+        <!--<item name="actionBarStyle">@style/MyActionBar</item>-->
+
     </style>
 
+
+    <style name="MyActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="background">@color/pinkish</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
 </resources>
