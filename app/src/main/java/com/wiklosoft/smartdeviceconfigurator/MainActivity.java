@@ -5,39 +5,41 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.net.DhcpInfo;
 import android.net.wifi.ScanResult;
-import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.FrameLayout;
-import android.widget.TextView;
+import android.widget.ProgressBar;
 
-import com.goebl.david.Response;
-import com.goebl.david.Webb;
+import com.wiklosoft.smartdeviceconfigurator.fragments.NameChangeFragment;
+import com.wiklosoft.smartdeviceconfigurator.fragments.SetDeviceWifiFragment;
 import com.wiklosoft.smartdeviceconfigurator.fragments.SplashScreenFragment;
+import com.wiklosoft.smartdeviceconfigurator.fragments.SuccessFragment;
 import com.wiklosoft.smartdeviceconfigurator.fragments.WifiResultsFragment;
+import com.wiklosoft.smartdeviceconfigurator.fragments.WizardAuthorizationFragment;
 
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements IActionResult {
     private String TAG = "MainActivity";
     FrameLayout mFrame;
-    WifiManager mWifiManager;
+
+    List<ScanResult> mScanResults;
+    ProgressBar mProgresbar;
+    Handler mHandler = new Handler();
+
+    public static String CONNECT_TO_DEVICE_WIFI = "CONNECT_TO_DEVICE_WIFI";
+    public static String SET_NAME = "SET_NAME";
+    public static String WIZARD_WIFI_SETTINGS = "WIZARD_WIFI_SETTINGS";
+    public static String WIZARD_OAUTH = "WIZARD_OAUTH";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +47,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mFrame = (FrameLayout) findViewById(R.id.frame);
-
+        mProgresbar = (ProgressBar) findViewById(R.id.wizardProgress);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.frame, new SplashScreenFragment());
         transaction.commit();
 
-        mWifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        registerReceiver(mWifiScanReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
-        mWifiManager.startScan();
+
+
+        mHandler.postDelayed(()-> showWifiResultsFragment(), 5000);
     }
 
     @Override
@@ -85,28 +87,73 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private final BroadcastReceiver mWifiScanReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context c, Intent intent) {
-            if (intent.getAction().equals(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)) {
-                List<ScanResult> scanResults = mWifiManager.getScanResults();
-                Log.d(TAG, scanResults.toString());
 
-                if (scanResults.size() >0)
-                    showWifiResultsFragment(scanResults);
-            }
-        }
-    };
 
-    private void showWifiResultsFragment(List<ScanResult> scanResults){
+    private void showWifiResultsFragment(){
         WifiResultsFragment fragment = new WifiResultsFragment();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame, fragment);
-        transaction.commit();
+        transaction.addToBackStack(null).commit();
 
-        fragment.setWifiScanResults(scanResults);
+        fragment.init(this);
     }
 
 
+    private void showWifiConfigFragment(){
+        SetDeviceWifiFragment fragment = new SetDeviceWifiFragment();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame, fragment);
+        transaction.addToBackStack(null).commit();
+
+        fragment.init(this);
+    }
+
+    private void showNameSetupFragment(){
+        NameChangeFragment fragment = new NameChangeFragment();
+        fragment.init(this);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame, fragment);
+        transaction.addToBackStack(null).commit();
+    }
+
+    private void showAuthorizationFragment(){
+        WizardAuthorizationFragment fragment = new WizardAuthorizationFragment();
+        fragment.init(this);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame, fragment);
+        transaction.addToBackStack(null).commit();
+    }
+    private void showSuccessFragment(){
+        SuccessFragment fragment = new SuccessFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame, fragment);
+        transaction.addToBackStack(null).commit();
+    }
+
+    @Override
+    public void onSuccess(String name) {
+        Log.d(TAG, "onSuccess "+ name);
+
+        if (name.equals(CONNECT_TO_DEVICE_WIFI)){
+            showNameSetupFragment();
+            mProgresbar.setProgress(1);
+        }else if (name.equals(SET_NAME)){
+            showWifiConfigFragment();
+            mProgresbar.setProgress(2);
+        }else if (name.equals(WIZARD_WIFI_SETTINGS)){
+            showAuthorizationFragment();
+            mProgresbar.setProgress(3);
+        }else if (name.equals(WIZARD_OAUTH)){
+            showSuccessFragment();
+            mProgresbar.setProgress(4);
+        }
+
+    }
+
+    @Override
+    public void onFailure(String name) {
+
+    }
 }

@@ -1,23 +1,14 @@
 package com.wiklosoft.smartdeviceconfigurator;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.net.wifi.ScanResult;
-import android.net.wifi.WifiConfiguration;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-
-import com.wiklosoft.smartdeviceconfigurator.fragments.WifiResultsFragment;
-
-import static android.R.attr.key;
-import static android.content.Context.WIFI_SERVICE;
 
 /**
  * Created by pwiklowski on 01.06.17.
