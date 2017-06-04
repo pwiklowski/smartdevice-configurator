@@ -46,6 +46,20 @@ public class WifiResultsFragment extends Fragment implements WifiPasswordDialog.
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+        mWifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        getActivity().registerReceiver(mWifiScanReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+        mWifiManager.startScan();
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        getActivity().unregisterReceiver(mWifiScanReceiver);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mWifiManager = (WifiManager)getActivity().getApplicationContext().getSystemService(WIFI_SERVICE);
         View v = inflater.inflate(R.layout.fragment_wifi_results, container, false);
@@ -62,9 +76,6 @@ public class WifiResultsFragment extends Fragment implements WifiPasswordDialog.
             }
         });
 
-        mWifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        getActivity().registerReceiver(mWifiScanReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
-        mWifiManager.startScan();
         return v;
     }
 
@@ -92,7 +103,7 @@ public class WifiResultsFragment extends Fragment implements WifiPasswordDialog.
         }
     };
 
-    private final BroadcastReceiver mWifiScanReceiver = new BroadcastReceiver() {
+    protected final BroadcastReceiver mWifiScanReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context c, Intent intent) {
             if (intent.getAction().equals(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)) {
