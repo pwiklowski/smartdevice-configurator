@@ -40,6 +40,9 @@ public class WifiListAdapter  extends ArrayAdapter<ScanResult> {
         }
         TextView name = (TextView) convertView.findViewById(R.id.wifiName);
         name.setText(result.SSID);
+
+        TextView level = (TextView) convertView.findViewById(R.id.signalLevel);
+        level.setText("Signal level: " + result.level);
         return convertView;
     }
 }
