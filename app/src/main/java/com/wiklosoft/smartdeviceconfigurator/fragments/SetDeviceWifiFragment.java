@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.goebl.david.Webb;
 import com.wiklosoft.smartdeviceconfigurator.R;
@@ -37,8 +38,11 @@ public class SetDeviceWifiFragment extends WifiResultsFragment {
         mListContainer = (SwipeRefreshLayout) v.findViewById(R.id.wifiListContainer);
         mList = (ListView) v.findViewById(R.id.wifiList);
         mList.setAdapter(mAdapter);
-
         mList.setOnItemClickListener(mOnItemClickListener);
+
+        TextView prompt = (TextView) v.findViewById(R.id.wifiPrompt);
+        prompt.setText(R.string.select_device_wifi);
+
         mListContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
