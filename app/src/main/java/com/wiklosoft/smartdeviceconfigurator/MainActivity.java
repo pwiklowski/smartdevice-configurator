@@ -36,8 +36,8 @@ public class MainActivity extends AppCompatActivity implements IActionResult {
     ProgressBar mProgresbar;
     Handler mHandler = new Handler();
 
-    public static String CONNECT_TO_DEVICE_WIFI = "CONNECT_TO_DEVICE_WIFI";
-    public static String SET_NAME = "SET_NAME";
+    public static String WIZARD_CONNECT_TO_DEVICE_WIFI = "CONNECT_TO_DEVICE_WIFI";
+    public static String WIZARD_SET_NAME = "SET_NAME";
     public static String WIZARD_WIFI_SETTINGS = "WIZARD_WIFI_SETTINGS";
     public static String WIZARD_OAUTH = "WIZARD_OAUTH";
     public static String WIZARD_SUCCESS = "WIZARD_SUCCESS";
@@ -136,10 +136,10 @@ public class MainActivity extends AppCompatActivity implements IActionResult {
     public void onSuccess(String name) {
         Log.d(TAG, "onSuccess "+ name);
 
-        if (name.equals(CONNECT_TO_DEVICE_WIFI)){
+        if (name.equals(WIZARD_CONNECT_TO_DEVICE_WIFI)){
             showNameSetupFragment();
             mProgresbar.setProgress(1);
-        }else if (name.equals(SET_NAME)){
+        }else if (name.equals(WIZARD_SET_NAME)){
             showWifiConfigFragment();
             mProgresbar.setProgress(2);
         }else if (name.equals(WIZARD_WIFI_SETTINGS)){

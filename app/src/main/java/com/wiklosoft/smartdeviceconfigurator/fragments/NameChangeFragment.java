@@ -34,7 +34,7 @@ public class NameChangeFragment extends Fragment {
     private void saveName(String name){
         Thread t = new Thread(() -> {
             mClient.post("http://" + getGateway() + "/name").param("name", name).asString();
-            mResultListener.onSuccess(MainActivity.SET_NAME);
+            mResultListener.onSuccess(MainActivity.WIZARD_SET_NAME);
         });
         t.start();
     }

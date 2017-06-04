@@ -18,7 +18,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.wiklosoft.smartdeviceconfigurator.IActionResult;
-import com.wiklosoft.smartdeviceconfigurator.MainActivity;
 import com.wiklosoft.smartdeviceconfigurator.R;
 import com.wiklosoft.smartdeviceconfigurator.WifiPasswordDialog;
 import com.wiklosoft.smartdeviceconfigurator.utils.WiFi;
@@ -27,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.Context.WIFI_SERVICE;
-import static com.wiklosoft.smartdeviceconfigurator.MainActivity.CONNECT_TO_DEVICE_WIFI;
+import static com.wiklosoft.smartdeviceconfigurator.MainActivity.WIZARD_CONNECT_TO_DEVICE_WIFI;
 
 public class WifiResultsFragment extends Fragment implements WifiPasswordDialog.WifiPasswordDialogListener {
     private String TAG = "WifiResultsFragment";
@@ -94,9 +93,9 @@ public class WifiResultsFragment extends Fragment implements WifiPasswordDialog.
             }else{
                 Log.d(TAG, "Wifi is configured, connect");
                 if (WiFi.connectToConfiguredNetwork(mWifiManager,configuration, true)){
-                    mResultListener.onSuccess(CONNECT_TO_DEVICE_WIFI);
+                    mResultListener.onSuccess(WIZARD_CONNECT_TO_DEVICE_WIFI);
                 }else{
-                    mResultListener.onFailure(CONNECT_TO_DEVICE_WIFI);
+                    mResultListener.onFailure(WIZARD_CONNECT_TO_DEVICE_WIFI);
                 }
             }
 
@@ -131,9 +130,9 @@ public class WifiResultsFragment extends Fragment implements WifiPasswordDialog.
     @Override
     public void onDialogPositiveClick(ScanResult result, String password) {
         if (WiFi.connectToNewNetwork(mWifiManager, result, password)){
-            mResultListener.onSuccess(CONNECT_TO_DEVICE_WIFI);
+            mResultListener.onSuccess(WIZARD_CONNECT_TO_DEVICE_WIFI);
         }else{
-            mResultListener.onFailure(CONNECT_TO_DEVICE_WIFI);
+            mResultListener.onFailure(WIZARD_CONNECT_TO_DEVICE_WIFI);
         }
     }
 }

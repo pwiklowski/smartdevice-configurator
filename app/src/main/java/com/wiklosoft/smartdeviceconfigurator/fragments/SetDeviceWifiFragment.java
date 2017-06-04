@@ -20,7 +20,7 @@ import com.wiklosoft.smartdeviceconfigurator.WifiPasswordDialog;
 import com.wiklosoft.smartdeviceconfigurator.utils.WiFi;
 
 import static android.content.Context.WIFI_SERVICE;
-import static com.wiklosoft.smartdeviceconfigurator.MainActivity.SET_NAME;
+import static com.wiklosoft.smartdeviceconfigurator.MainActivity.WIZARD_SET_NAME;
 import static com.wiklosoft.smartdeviceconfigurator.MainActivity.WIZARD_WIFI_SETTINGS;
 
 /**
@@ -77,7 +77,7 @@ public class SetDeviceWifiFragment extends WifiResultsFragment {
                     .param("ssid", res.SSID)
                     .param("password", pass)
                     .asString();
-            mResultListener.onSuccess(SET_NAME);
+            mResultListener.onSuccess(WIZARD_SET_NAME);
 
             WifiConfiguration configuration = isConfigured(res.SSID);
             if (configuration != null){
