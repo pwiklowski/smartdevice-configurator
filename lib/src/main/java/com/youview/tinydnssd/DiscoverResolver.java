@@ -122,6 +122,11 @@ public class DiscoverResolver {
         });
     }
 
+    public boolean isRunning(){
+        return mStarted;
+    }
+
+
     public synchronized void start() {
         if (mStarted) {
             throw new IllegalStateException();

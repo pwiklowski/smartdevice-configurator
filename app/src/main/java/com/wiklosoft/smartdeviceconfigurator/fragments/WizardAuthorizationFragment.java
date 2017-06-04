@@ -36,7 +36,6 @@ public class WizardAuthorizationFragment extends Fragment {
 
     String mDeviceIP;
     String mDeviceUUID;
-    Handler mHandler = new Handler(Looper.getMainLooper());
 
     public WizardAuthorizationFragment() {
 
@@ -56,25 +55,16 @@ public class WizardAuthorizationFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle b){
-       super.onCreate(b);
+        super.onCreate(b);
         mResolver = new DiscoverResolver(getContext(), NSD_SERVICE_TYPE,listener);
         mResolver.start();
-
-        mHandler.postDelayed(()-> restartScaning(), 3000);
-    }
-
-    void restartScaning(){
-        Log.d(TAG, "RestartScanning");
-        mResolver.stop();
-        mResolver.start();
-        mHandler.postDelayed(()-> restartScaning(), 3000);
     }
 
     @Override
     public void onDestroy(){
         super.onDestroy();
-        mHandler.removeCallbacksAndMessages(null);
-        mResolver.stop();
+        if (mResolver != null && mResolver.isRunning())
+            mResolver.stop();
     }
 
     @Override
