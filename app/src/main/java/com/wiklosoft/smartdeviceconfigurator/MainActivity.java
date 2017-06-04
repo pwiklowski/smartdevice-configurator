@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements IActionResult {
 
 
 
-        mHandler.postDelayed(()-> showWifiResultsFragment(), 5000);
+        mHandler.postDelayed(()-> showWifiResultsFragment(), 3000);
     }
 
     @Override
@@ -91,12 +91,10 @@ public class MainActivity extends AppCompatActivity implements IActionResult {
 
     private void showWifiResultsFragment(){
         WifiResultsFragment fragment = new WifiResultsFragment();
+        fragment.init(this);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame, fragment);
-        transaction.addToBackStack(null).commit();
-
-        fragment.init(this);
+        transaction.replace(R.id.frame, fragment).commit();
     }
 
 
