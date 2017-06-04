@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements IActionResult {
     public static String SET_NAME = "SET_NAME";
     public static String WIZARD_WIFI_SETTINGS = "WIZARD_WIFI_SETTINGS";
     public static String WIZARD_OAUTH = "WIZARD_OAUTH";
+    public static String WIZARD_SUCCESS = "WIZARD_SUCCESS";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements IActionResult {
     }
     private void showSuccessFragment(){
         SuccessFragment fragment = new SuccessFragment();
+        fragment.init(this);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame, fragment);
         transaction.addToBackStack(null).commit();
@@ -146,6 +148,9 @@ public class MainActivity extends AppCompatActivity implements IActionResult {
         }else if (name.equals(WIZARD_OAUTH)){
             showSuccessFragment();
             mProgresbar.setProgress(4);
+        }else if (name.equals(WIZARD_SUCCESS)){
+            showWifiResultsFragment();
+            mProgresbar.setProgress(0);
         }
 
     }

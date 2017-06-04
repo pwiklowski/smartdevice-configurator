@@ -28,7 +28,7 @@ import static com.wiklosoft.smartdeviceconfigurator.MainActivity.WIZARD_OAUTH;
  */
 public class WizardAuthorizationFragment extends Fragment {
     private String TAG = "WizardAuthorization";
-    private int GET_CODE_REQUEST = 1;
+    public static int GET_CODE_REQUEST = 1245;
     IActionResult mResultListener;
     private static final String NSD_SERVICE_TYPE = "_wiklosoftconfig._tcp.";
     DiscoverResolver mResolver;
